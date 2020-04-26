@@ -7,6 +7,7 @@ header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE, PUT');
 
 include('config.php');
+include('connectdb.php');
 $data = [];
 $login_button = '';
 
@@ -30,6 +31,22 @@ if (isset($_GET["code"])) {
         $_SESSION['user_last_name'] = $data['family_name'];
         $_SESSION['user_email_address'] = $data['email'];
         $_SESSION['user_image'] = $data['picture'];
+
+        list($computing, $rest) = explode('@', $data['email'], 2);
+        $stm = $db->prepare("select computingID from user where computingID = :computing");
+        $stm->bindParam(":computing", $computing, PDO::PARAM_STR);
+        $stm->execute();
+        $row = $stm->fetch(PDO::FETCH_ASSOC);
+
+        if ($row['computingID'] != $computing) {
+            $add_stm = $db->prepare("insert into user(first_name, last_name, computingID) values (:first, :last, :computing)");
+            $add_stm->bindParam(":first", $_SESSION['user_first_name'], PDO::PARAM_STR);
+            $add_stm->bindParam(":last", $_SESSION['user_last_name'], PDO::PARAM_STR);
+            $add_stm->bindParam(":computing", $computing, PDO::PARAM_STR);
+            $add_stm->execute();
+        }
+
+
     }
 }
 ?>
