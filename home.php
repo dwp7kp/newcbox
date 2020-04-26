@@ -11,9 +11,6 @@ include('connectdb.php');
 $data = [];
 $login_button = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-}
-
 // If being redirected from google auth
 if (isset($_GET["code"])) {
     // Get the token
@@ -33,7 +30,8 @@ if (isset($_GET["code"])) {
         $_SESSION['user_image'] = $data['picture'];
 
         list($computing, $rest) = explode('@', $data['email'], 2);
-        $stm = $db->prepare("select computingID from user where computingID = :computing");
+        $_SESSION['computing'] = $computing;
+        $stm = $db->prepare("select middle_name, computingID from user where computingID = :computing");
         $stm->bindParam(":computing", $computing, PDO::PARAM_STR);
         $stm->execute();
         $row = $stm->fetch(PDO::FETCH_ASSOC);
@@ -45,7 +43,10 @@ if (isset($_GET["code"])) {
             $add_stm->bindParam(":computing", $computing, PDO::PARAM_STR);
             $add_stm->execute();
         }
-
+        if ($row['middle_name'] === 'NULL')
+            $_SESSION['user_middle_name'] = '';
+        else
+            $_SESSION['user_middle_name'] = $row['middle_name'];
 
     }
 }
@@ -60,9 +61,13 @@ if (isset($_GET["code"])) {
     <title>NewcBox</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+    
 </head>
 
 <body>
@@ -70,10 +75,10 @@ if (isset($_GET["code"])) {
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">WebSiteName</a>
+                <a class="navbar-brand" href="home.php">WebSiteName</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="home.php">Home</a></li>
                 <li><a href="#">Page 1</a></li>
                 <li><a href="#">Page 2</a></li>
             </ul>
@@ -90,7 +95,7 @@ if (isset($_GET["code"])) {
             <div class="navbar-right" style="margin-right: 0px;">
                 <div class="mr-3">
                     <?php
-                    //This is for check user has login into system by using Google account, if User not login into system then it will execute if block of code and make code for display Login link for Login using Google account.
+                    // Check if user has logged in. If lgoged in, show profile and drop down. If not, display login link
                     if (!isset($_SESSION['access_token'])) {
                         //Create a URL to obtain user authorization
                         $login_button = '<a href="' . $google_client->createAuthUrl() . '"><img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" /></a>';
@@ -99,15 +104,16 @@ if (isset($_GET["code"])) {
                         $profile_button = '<img src="' . $_SESSION["user_image"] . '" class="img-responsive img-circle img-thumbnail" style="width: 50px; height: 50px" /> </h2>';
                         echo ('<a class="dropdown-toggle" data-toggle="dropdown">' . $profile_button . '</a>
                                <ul class="dropdown-menu">
+                                  <li><a href="profile.php">Profile</li>
                                   <li><a href="logout.php">Logout</li>
                                </ul>');
                     }
                     ?>
+                    </a>
                 </div>
             </div>
         </div>
     </nav>
-
     <!--
     <div class="container">
         <h3>Navbar Forms</h3>
