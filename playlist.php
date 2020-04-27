@@ -32,8 +32,8 @@ if (isset($_GET["code"])) {
         $_SESSION['user_image'] = $data['picture'];
     }
 }
-?>
 
+?>
 <!-- Navbar template from https://www.w3schools.com/bootstrap/bootstrap_navbar.asp -->
 <html>
 <!DOCTYPE html>

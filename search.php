@@ -173,7 +173,19 @@ $results = search($field, $searchq);
           </td>
           <td>
             <?php echo $result['clean']; ?> 
-          </td>                                                      
+          </td>   
+          <td>
+            <a href="#" class="btn btn-primary a-btn-slide-text">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              <span><strong>Add</strong></span>            
+            </a>
+          </td> 
+          <td>
+            <a href="#" class="btn btn-primary a-btn-slide-text">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <span><strong>Delete</strong></span>            
+            </a>
+          </td>                                                           
         </tr>
         <?php endforeach; ?>
         <?php else: ?>

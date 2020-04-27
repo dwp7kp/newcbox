@@ -67,9 +67,31 @@ function getAllSongs()
 	
    return $results;
 }
-
 $songs = getAllSongs();
 
+
+/*function addSong($field){
+  global $db;
+  $add_stm = $db->prepare("insert into playlist(playlistName, location, currentSong) values ('Newcomb Playlist, 'Newcomb', :field)");
+}
+
+/*function deleteSong($field){
+  global $db;
+  $query = "delete :field from playlist where currentSong = :field"
+  $statement = $db->prepare($query);
+  $statement->execute();
+	
+   // fetchAll() returns an array for all of the rows in the result set
+   $results = $statement->fetchAll();
+	
+   // closes the cursor and frees the connection to the server so other SQL statements may be issued
+   $statement->closecursor();
+	
+   return $results;
+}
+$addSong = addSong($field);
+$deleteSong = deleteSong($field)
+*/
 
 ?>
 
@@ -170,7 +192,19 @@ $songs = getAllSongs();
           </td>
           <td>
             <?php echo $song['clean']; ?> 
-          </td>                                                      
+          </td> 
+          <td>
+            <a href="#" class="btn btn-primary a-btn-slide-text" action='/cs4750/newcbox/add.php' > 
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              <span><strong>Add</strong></span>            
+            </a>
+          </td> 
+          <td>
+            <a href="#" class="btn btn-primary a-btn-slide-text">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <span><strong>Delete</strong></span>            
+            </a>
+          </td>                                                
         </tr>
         <?php endforeach; ?>
       </table>
