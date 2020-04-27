@@ -78,13 +78,19 @@ if (isset($_GET["code"])) {
                 <a class="navbar-brand" href="home.php">WebSiteName</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="home.php">Home</a></li>
-                <li><a href="#">Page 1</a></li>
-                <li><a href="#">Page 2</a></li>
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="/cs4750/newcbox/playlist.php">Playlists</a></li>
+                <li><a href="/cs4750/newcbox/song.php">Songs</a></li>
             </ul>
-            <form class="navbar-form navbar-left" action="/action_page.php">
+            <form class="navbar-form navbar-left" action="/newcbox/search.php" method="post" id="searchform">
+                <select class="browser-default custom-select" name="field" form="searchform">
+                    <option value="sName" selected>Song</option>
+                    <option value="mArtist">Artist</option>
+                    <option value="genre">Genre</option>
+                    <option value="year">Year</option>
+                </select>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="search">
+                    <input type="text" class="form-control" placeholder="Search" name="searchq">
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                             <i class="glyphicon glyphicon-search"></i>
