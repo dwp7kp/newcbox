@@ -10,6 +10,37 @@ include('config.php');
 $data = [];
 $login_button = '';
 
+// $submit = $_POST['submit'];
+
+// function getLocationPlaylist($submit)
+// {
+//     $query= '';
+//     global $db;
+//     $query = "select playlistName from playlist where location = :submit";
+//     $statement = $db->prepare($query);
+//     $statement->bindValue(':submit', $submit);
+//     $statement->execute();
+//     $results = $statement->fetchAll();
+//     $statement->closecursor();
+//     return $results;
+// }
+
+// $locationPlaylist = getLocationPlaylist($submit);
+
+// function getCurrentSong($submit)
+// {
+//     global $db;
+//     $query = "select currentSong from playlist where location = :submit";
+//     $statement = $db->prepare($query);
+//     $statement->bindValue(':submit', $submit);
+//     $statement->execute();
+//     $results = $statement->fetchAll();
+//     $statement->closecursor();
+//     return $results;
+// }
+
+// $locationCurrentSong = getCurrentSong($submit);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
@@ -105,6 +136,27 @@ if (isset($_GET["code"])) {
             <input type="submit" name="export" value="Download Playlist as CSV" />
         </form>
         <br /><br />
+        <div>
+        <h4>Select location below to view corresponding playlist and current song being played:</h4>
+        <form method="POST" >
+            <select id="location" name="location">
+                <option value="1515">1515</option>
+                <option value="afc">AFC</option>
+                <option value="memGym">Mem Gym</option>
+                <option value="msc">Multicultural Students Center</option>
+                <option value="newcomb">Newcomb</option>
+                <option value="newcombStarbucks">Newcomb Starbucks</option>
+                <option value="ohill">Ohill</option>
+                <option value="pav">Pav</option>
+                <option value="runk">Runk</option>
+                <option value="slaughter">Slaughter</option>
+                <option value="westRange">West Range</option>
+            </select>
+        <input type="submit" name="submit" value="Submit">
+        </form>
+        <!-- <h5> <?php echo $location + "Playlist Name: " + $locationPlaylist + "Current Song" + $locationCurrentSong ?> </h5> -->
+    </div>
+        
     <!--
     <div class="container">
         <h3>Navbar Forms</h3>
