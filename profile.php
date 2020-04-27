@@ -1,16 +1,10 @@
 <?php
 
 include('home.php');
+include('connectdb.php');
 
 if (!isset($_SESSION['computing']))
     header("location:home.php");
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-}
-
-function updateDB() {
-    
-}
 
 ?>
 
@@ -39,7 +33,7 @@ function updateDB() {
             </div>
 
 
-            <button type="submit" href='#modal' data-toggle='modal' ng-hide='!edit' class="btn btn-primary" ng-click="edit = false" onclick="udpateDB()">Save</button>
+            <button type="submit" id="save" href='#modal' data-toggle='modal' ng-hide='!edit' class="btn btn-primary" ng-click="edit = false">Save</button>
 
             <div id="modal" class="modal fade">
                 <div class="modal-dialog modal-confirm">
@@ -57,4 +51,7 @@ function updateDB() {
             </div>
         </form>
     </div>
+
+    <script type="text/javascript" src="update.js"></script>
 </body>
+
